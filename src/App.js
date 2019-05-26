@@ -7,9 +7,13 @@ import Rooms from "./pages/Rooms";
 import SingleRoom from "./pages/SingleRoom";
 import Error from "./pages/Error";
 
+import Navbar from "./components/Navbar";
+
+// switch renders the first child element that matches
 function App() {
   return (
     <>
+      <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/rooms" component={Rooms} />
