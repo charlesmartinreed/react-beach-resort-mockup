@@ -59,14 +59,40 @@ class RoomProvider extends React.Component {
     return room;
   };
 
+  // callback to filterRooms because setState is async - only triggered AFTER setState
   handleChange = e => {
-    const { type, name, value } = e.target;
-    console.log(type, name, value);
+    const target = e.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState(
+      {
+        [name]: value
+      },
+      this.filterRooms
+    );
   };
 
   filterRooms = () => {
-    // grab values from state
-    console.log("hello");
+    let {
+      rooms,
+      type,
+      capacity,
+      price,
+      minSize,
+      maxSize,
+      breakfast,
+      pets
+    } = this.state;
+
+    let tempRooms = [...rooms];
+    if (type !== "all") {
+      // filter tempItems
+      tempRooms = tempRooms.filter(room => room.type === type);
+    }
+    this.setState({
+      sortedRooms: tempRooms
+    });
   };
 
   render() {
