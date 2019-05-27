@@ -56,4 +56,15 @@ class RoomProvider extends React.Component {
 }
 
 const RoomConsumer = RoomContext.Consumer;
+
+// higher order component that wraps the component passed into it and leverages our context consumer
+export function withRoomConsumer(Component) {
+  return function ConsumerWrapper(props) {
+    return (
+      <RoomConsumer>
+        {value => <Component {...props} context={value} />}
+      </RoomConsumer>
+    );
+  };
+}
 export { RoomProvider, RoomConsumer, RoomContext };
