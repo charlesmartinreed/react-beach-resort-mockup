@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import items from "./data";
 
 // gives access to Provider and Consumer

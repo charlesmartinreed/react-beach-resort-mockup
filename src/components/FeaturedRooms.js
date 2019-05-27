@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { RoomContext } from "../context";
 import Loading from "./Loading";
 import Room from "./Room";
