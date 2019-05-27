@@ -8,13 +8,10 @@ class FeaturedRooms extends React.Component {
   static contextType = RoomContext;
 
   render() {
-    const { greeting, name } = this.context;
+    const { featuredRooms: rooms } = this.context;
+    console.log(rooms);
 
-    return (
-      <div>
-        {greeting} from {name} in featured rooms component
-      </div>
-    );
+    return <div> featured rooms component</div>;
   }
 }
 
