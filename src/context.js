@@ -1,5 +1,6 @@
 import React from "react";
-import items from "./data";
+// import items from "./data";
+import Client from "./Contentful";
 
 // gives access to Provider and Consumer
 // Provider allows all components in tree to access shared information
@@ -24,22 +25,50 @@ class RoomProvider extends React.Component {
     pets: false
   };
 
+  // Contentful data
+  // query entries with content_id or content_type
+  getData = async () => {
+    try {
+      let response = await Client.getEntries({
+        content_type: "beachResortReact",
+        order: "fields.price"
+      });
+
+      let rooms = this.formatData(response.items);
+      let featuredRooms = rooms.filter(room => room.featured === true);
+      let maxPrice = Math.max(...rooms.map(item => item.price));
+      let maxSize = Math.max(...rooms.map(item => item.size));
+
+      this.setState({
+        rooms,
+        featuredRooms,
+        sortedRooms: rooms,
+        loading: false,
+        price: maxPrice,
+        maxPrice,
+        maxSize
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // we'll be getting the max price and max size from the data itself
   componentDidMount() {
-    // this.getData
-    let rooms = this.formatData(items);
-    let featuredRooms = rooms.filter(room => room.featured === true);
-    let maxPrice = Math.max(...rooms.map(item => item.price));
-    let maxSize = Math.max(...rooms.map(item => item.size));
-    this.setState({
-      rooms,
-      featuredRooms,
-      sortedRooms: rooms,
-      loading: false,
-      price: maxPrice,
-      maxPrice,
-      maxSize
-    });
+    this.getData();
+    // let rooms = this.formatData(items);
+    // let featuredRooms = rooms.filter(room => room.featured === true);
+    // let maxPrice = Math.max(...rooms.map(item => item.price));
+    // let maxSize = Math.max(...rooms.map(item => item.size));
+    // this.setState({
+    //   rooms,
+    //   featuredRooms,
+    //   sortedRooms: rooms,
+    //   loading: false,
+    //   price: maxPrice,
+    //   maxPrice,
+    //   maxSize
+    // });
   }
 
   formatData = items => {
