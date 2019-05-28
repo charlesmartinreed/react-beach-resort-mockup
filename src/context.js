@@ -64,6 +64,7 @@ class RoomProvider extends React.Component {
     const target = e.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
+    console.log(name);
 
     this.setState(
       {
@@ -86,10 +87,19 @@ class RoomProvider extends React.Component {
     } = this.state;
 
     let tempRooms = [...rooms];
+    capacity = parseInt(capacity);
+
+    // filter by type
     if (type !== "all") {
       // filter tempItems
       tempRooms = tempRooms.filter(room => room.type === type);
     }
+
+    // filter by capacity
+    if (capacity !== 1) {
+      tempRooms = tempRooms.filter(room => room.capacity >= capacity);
+    }
+
     this.setState({
       sortedRooms: tempRooms
     });
